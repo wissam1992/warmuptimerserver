@@ -9,6 +9,7 @@ const logger=require('morgan')
  var cors=require('cors');
  const app=express();
  const path=require('path')
+ const hostname = '10.46.221.31';
  //var router=express.Router();
 
  const devicerouter=require('./routes/routeDevice')
@@ -32,7 +33,7 @@ const logger=require('morgan')
  ////////////////////////////////////////////
  
 
-app.listen(3000,()=>{console.log('server is running')})
+app.listen(3000,hostname,()=>{console.log('server is running')})
 
 // const express = require('express');
 // const app = express();
