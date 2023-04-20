@@ -33,7 +33,7 @@ const logger=require('morgan')
  ////////////////////////////////////////////
  
 
-app.listen(3000,'0.0.0.0',()=>{console.log('server is running')})
+app.listen(3000,()=>{console.log('server is running')})
 
 // const express = require('express');
 // const app = express();
