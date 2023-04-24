@@ -46,8 +46,8 @@ router.route('/devices').get((req,res)=>{
   });
 
   router.route('/deviceinfo/:id').get((req,res)=>{
-   // dboperation.getdeviceinfo(req.params.id)
-    dboperation.getdevice(req.params.id)
+    dboperation.getdeviceinfo(req.params.id)
+   // dboperation.getdevice(req.params.id)
     .then(data => {
       const myData = data; // save the data in a variable
       res.send(myData); // send a response indicating that the data has been retrieved successfully
