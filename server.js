@@ -35,7 +35,7 @@ const logger=require('morgan')
  ////////////////////////////////////////////
  
 
-app.listen(port,'159.180.162.12',()=>{console.log(app.get('env')+'mode  Server is running on port 8000')})
+app.listen(port,'10.46.221.31',()=>{console.log(app.get('env')+'mode  Server is running on port 8000')})
 
 // const express = require('express');
 // const app = express();
