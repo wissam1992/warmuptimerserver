@@ -187,23 +187,31 @@ function getdeviceinfo(id){
             console.error(err.message);
             return;
           }
+          const row = result.rows[0];
+          const data = {
+            DEVICE_ID: row[0],
+            WARMUPTIMESTAMP: row[1],
+            ALREADYUSEDFLAG: row[2]
+          };
 
-          const rows = result.rows;
+          // const rows = result.rows;
         
-          const data = rows.map(row => {
+          // const data = rows.map(row => {
   
-            return {
-              DEVICE_ID: row[0],
-              WARMUPTIMESTAMP: row[1],
-              ALREADYUSEDFLAG: row[2]
-            };
-          });
+          //   return {
+          //     DEVICE_ID: row[0],
+          //     WARMUPTIMESTAMP: row[1],
+          //     ALREADYUSEDFLAG: row[2]
+          //   };
+          // });
           console.log('DATA=>')
           console.log(data)
          
           
           connection.close();
-          resolve(data);
+          resolve(JSON.stringify(data));
+          //resolve(JSON.parse(data));
+          //resolve(data);
          
     
           // Return the data as a JSON object
