@@ -16,6 +16,8 @@ const logger=require('morgan')
  const postrouter=require('./routes/routeDevicepost')
 
 
+ const port = 8000;
+
   app.use(express.static(path.join(__dirname,'assets')))
   app.set('view engine','ejs')
   app.set('views','views')
@@ -33,7 +35,7 @@ const logger=require('morgan')
  ////////////////////////////////////////////
  
 
-app.listen(8000,()=>{console.log('server is running')})
+app.listen(port,'0.0.0.0',()=>{console.log(app.get('env'))})
 
 // const express = require('express');
 // const app = express();
