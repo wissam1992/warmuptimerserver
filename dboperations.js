@@ -112,8 +112,6 @@ function gettime(did){
 }
 function getdevice(id){  
   return new Promise((resolve, reject) => {
-
-console.log('rout wurde aufgerufen')
   oracledb.getConnection(config, (err, connection) => {
       if (err) {
         console.error(err.message);
@@ -178,7 +176,7 @@ function getdeviceinfo(id){
       }
    //WHERE device_id= :value    ['SYR23DE001'],
       connection.execute(
-        'SELECT * FROM device WHERE device_id= :value', 
+        'SELECT * FROM device WHERE deviceid= :value', 
           [id],
      
       
@@ -189,9 +187,11 @@ function getdeviceinfo(id){
           }
           const row = result.rows[0];
           const data = {
-            DEVICE_ID: row[0],
+            DEVICEID: row[0],
             WARMUPTIMESTAMP: row[1],
-            ALREADYUSEDFLAG: row[2]
+            ALREADYUSEDFLAG: row[2],
+            GRACEPERIOD: row[3],
+            WARMUPTIME: row[4]
           };
 
           // const rows = result.rows;
@@ -216,6 +216,48 @@ function getdeviceinfo(id){
     
           // Return the data as a JSON object
          // res.json(data);
+        }
+      );
+     
+    
+    });
+  
+ 
+  });
+}
+function alldeviceinfo(id){  
+  return new Promise((resolve, reject) => {
+
+
+  oracledb.getConnection(config, (err, connection) => {
+      if (err) {
+        console.error(err.message);
+        return;
+      }
+      connection.execute(
+        'SELECT d.DEVICEID, d.WARMUPTIMESTAMP, d.ALREADYUSEDFLAG, d.GRACEPERIOD, d.WARMUPTIME, i.MESSAGE_EN, i.MESSAGE_DE FROM Device d INNER JOIN DEVICE_INFO i ON d.DEVICEID = i.DEVICE_IDFK', 
+        //  [id],
+
+        (err, result) => {
+          if (err) {
+            console.error(err.message);
+            return;
+          }
+          const row = result.rows[0];
+          const data = {
+            DEVICEID: row[0],
+            WARMUPTIMESTAMP: row[1],
+            ALREADYUSEDFLAG: row[2],
+            GRACEPERIOD: row[3],
+            WARMUPTIME: row[4],
+            MESSAGE_EN: row[5],
+            MESSAGE_DE: row[6],
+          };
+          console.log('DATA=>')
+          console.log(data)
+         
+          connection.close();
+          resolve(JSON.stringify(data));
         }
       );
      
@@ -440,5 +482,6 @@ function getDeviceInfo (id){
           updatedevice:updatedevice,
           updatedeviceflag:updatedeviceflag,
           getDeviceInfo:getDeviceInfo,
+          alldeviceinfo:alldeviceinfo,
 }
 
