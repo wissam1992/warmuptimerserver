@@ -102,7 +102,9 @@ router.route('/devices').get((req,res)=>{
   });
 
   router.route('/').get((req,res)=>{
-    dboperation.getdevices()
+    res.render('index')
+    
+   /*  dboperation.getdevices()
     .then(data => {
       const myData = data; // save the data in a variable
       res.send(myData); // send a response indicating that the data has been retrieved successfully
@@ -111,7 +113,7 @@ router.route('/devices').get((req,res)=>{
       console.error(err);
       res.status(500).send('Error retrieving data'); // send a response indicating that there was an error retrieving the data
     });
-    
+     */
     
   })
 

@@ -7,6 +7,22 @@
     <title>Document</title>
 </head>
 <body>
-   <h1>Hello</h1> 
+    <form action="/insert" method="post">
+        <label for="deviceid">Device ID:</label>
+        <input type="text" name="deviceid" id="deviceid" required>
+        
+        <label for="warmuptimestamp">Warmup Timestamp:</label>
+        <input type="text" name="warmuptimestamp" id="warmuptimestamp" required>
+      
+        <!-- Include input fields for other columns in Device table -->
+      
+        <label for="nfo_id">NFO ID:</label>
+        <input type="text" name="nfo_id" id="nfo_id" required>
+      
+        <!-- Include input fields for other columns in Device_info table -->
+      
+        <button type="submit">Submit</button>
+      </form>
+      
 </body>
 </html>

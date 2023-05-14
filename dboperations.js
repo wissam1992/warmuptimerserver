@@ -235,7 +235,8 @@ function alldeviceinfo(id){
         return;
       }
       connection.execute(
-        'SELECT d.DEVICEID, d.WARMUPTIMESTAMP, d.ALREADYUSEDFLAG, d.GRACEPERIOD, d.WARMUPTIME, i.MESSAGE_EN, i.MESSAGE_DE FROM Device d INNER JOIN DEVICE_INFO i ON d.DEVICEID = i.DEVICE_IDFK', 
+        'SELECT d.DEVICEID, d.WARMUPTIMESTAMP, d.ALREADYUSEDFLAG, d.GRACEPERIOD, d.WARMUPTIME, i.MESSAGE_EN, i.MESSAGE_DE FROM Device d INNER JOIN DEVICE_INFO i ON d.DEVICEID = i.DEVICE_IDFK WHERE deviceid= :value', 
+        [id],
         //  [id],
 
         (err, result) => {
