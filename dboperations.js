@@ -241,7 +241,16 @@ function alldeviceinfo(id){
 
         (err, result) => {
           if (err) {
-            console.error(err.message);
+            console.error('ERROR'+ err.message);
+            connection.close();
+            reject(err);
+            return;
+          }
+          if (result.rows.length === 0) {
+            // Device does not exist in the database
+            connection.close();
+           // resolve(null);
+            resolve({ message: 'Device does not exist' });
             return;
           }
           const row = result.rows[0];
@@ -254,11 +263,11 @@ function alldeviceinfo(id){
             MESSAGE_EN: row[5],
             MESSAGE_DE: row[6],
           };
-          console.log('DATA=>')
           console.log(data)
          
           connection.close();
           resolve(JSON.stringify(data));
+         // resolve(data);
         }
       );
      
