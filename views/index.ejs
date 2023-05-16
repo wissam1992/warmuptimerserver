@@ -7,8 +7,9 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/insert" method="post">
-        <label for="deviceid">Device ID:</label>
+    <form action="/server/insert" method="post">
+
+        <label for="deviceid">Device Id:</label>
         <input type="text" name="deviceid" id="deviceid" required>
         
         <label for="warmuptimestamp">Warmup Timestamp:</label>
@@ -16,11 +17,15 @@
       
         <!-- Include input fields for other columns in Device table -->
       
-        <label for="nfo_id">NFO ID:</label>
-        <input type="text" name="nfo_id" id="nfo_id" required>
-      
-        <!-- Include input fields for other columns in Device_info table -->
-      
+        <label for="alreadyusedflag">Alreda used Flag:</label>
+        <input type="text" name="alreadyusedflag" id="alreadyusedflag" required>
+
+        <label for="graceperiod">Grace Persiod Time:</label>
+        <input type="text" name="graceperiod" id="graceperiod" required>
+       
+        <label for="warmuptime">Warmup Time:</label>
+        <input type="text" name="warmuptime" id="warmuptime" required>
+     
         <button type="submit">Submit</button>
       </form>
       

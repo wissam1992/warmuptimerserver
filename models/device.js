@@ -1,8 +1,10 @@
 class device{
-    constructor(device_id,warmuptimestamp,usedflag){
-        this.deviceId=device_id;
+    constructor(deviceid,warmuptimestamp,alreadyusedflag,graceperiod,warmuptime){
+        this.deviceId=deviceid;
         this.warmuptimestamp=warmuptimestamp;
-        this.usedflag=usedflag;
+        this.alreadyusedflag=alreadyusedflag;
+        this.graceperiod=graceperiod;
+        this.warmuptime=warmuptime;
     }
 }
 module.exports=device;

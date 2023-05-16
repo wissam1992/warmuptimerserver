@@ -235,7 +235,7 @@ function alldeviceinfo(id){
         return;
       }
       connection.execute(
-        'SELECT d.DEVICEID, d.WARMUPTIMESTAMP, d.ALREADYUSEDFLAG, d.GRACEPERIOD, d.WARMUPTIME, i.MESSAGE_EN, i.MESSAGE_DE FROM Device d INNER JOIN DEVICE_INFO i ON d.DEVICEID = i.DEVICE_IDFK WHERE deviceid= :value', 
+        'SELECT d.DEVICEID, d.WARMUPTIMESTAMP, d.GRACEPERIOD, d.WARMUPTIME, i.MESSAGE_EN, i.MESSAGE_DE FROM Device d INNER JOIN DEVICE_INFO i ON d.DEVICEID = i.DEVICE_IDFK WHERE deviceid= :value', 
         [id],
         //  [id],
 
@@ -257,11 +257,10 @@ function alldeviceinfo(id){
           const data = {
             DEVICEID: row[0],
             WARMUPTIMESTAMP: row[1],
-            ALREADYUSEDFLAG: row[2],
-            GRACEPERIOD: row[3],
-            WARMUPTIME: row[4],
-            MESSAGE_EN: row[5],
-            MESSAGE_DE: row[6],
+            GRACEPERIOD: row[2],
+            WARMUPTIME: row[3],
+            MESSAGE_EN: row[4],
+            MESSAGE_DE: row[5],
           };
           console.log(data)
          
@@ -335,7 +334,69 @@ function adddevice(device) {
     });
   });
 }
-function updatedevice(id, warmupTimestamp, alreadyUsedFlag) {  
+function insertevice(device) {
+  console.log('insertdevice:');
+  console.log(device);
+  return new Promise((resolve, reject) => {
+    oracledb.getConnection(config, (err, connection) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+/* 
+      const query = 'INSERT INTO device (deviceid, warmuptimestamp, alreadyusedflag, graceperiod, warmuptime)'+
+     ' VALUES ('SYR23DE006', '2023-05-15 10:30:00', 0, 15, 60)'; */
+      
+
+            const query = 'INSERT INTO Device (DEVICEID, WARMUPTIMESTAMP, ALREADYUSEDFLAG, GRACEPERIOD, WARMUPTIME) VALUES'+
+            ' (:deviceid, :warmuptimestamp, :alreadyusedflag, :graceperiod, :warmuptime)';
+            const binds = {
+              deviceid: device.deviceid,
+              warmupTimestamp: device.warmupTimestamp,
+              alreadyusedflag:0,
+              graceperiod:15,
+              warmuptime:20 
+            /*   alreadyusedflag: device.alreadyusedflag,
+              graceperiod: device.graceperiod,
+              warmuptime: device.warmuptime */
+             
+            };
+
+    /*   const query = 'INSERT INTO DEVICE_INFO (INFO_ID, DEVICE_IDFK, MESSAGE_EN,MESSAGE_DE,WARMUPTIME) VALUES (:INFO_ID, :DEVICE_IDFK, :MESSAGE_EN, :MESSAGE_DE, :WARMUPTIME)';
+      const binds = {
+        INFO_ID: device.INFO_ID,
+        DEVICE_IDFK: device.DEVICE_IDFK,
+        MESSAGE_EN: device.MESSAGE_EN,
+        MESSAGE_DE: device.MESSAGE_DE,
+        WARMUPTIME: device.WARMUPTIME
+       
+      }; */
+      const options = {
+        autoCommit: true
+      };
+
+      connection.execute(query, binds, options, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+
+        connection.close();
+      });
+    });
+  });
+}
+
+
+
+
+
+
+
+function updatedevice(id, warmuptimestamp) {  
+
   return new Promise((resolve, reject) => {
     oracledb.getConnection(config, (err, connection) => {
       if (err) {
@@ -343,8 +404,8 @@ function updatedevice(id, warmupTimestamp, alreadyUsedFlag) {
         reject(err);
       }
       connection.execute(
-        'UPDATE device SET WARMUPTIMESTAMP = :warmupTimestamp, ALREADYUSEDFLAG = :alreadyUsedFlag WHERE device_id = :id', 
-        [warmupTimestamp, alreadyUsedFlag, id],
+        'UPDATE device SET WARMUPTIMESTAMP = TO_TIMESTAMP(:warmuptimestamp, \'DD.MM.RR HH24:MI:SS,FF9\') WHERE deviceid = :id',
+        [warmuptimestamp, id],
         (err, result) => {
           if (err) {
             console.error(err.message);
@@ -355,8 +416,6 @@ function updatedevice(id, warmupTimestamp, alreadyUsedFlag) {
               console.error(err.message);
               reject(err);
             }
-            console.log('Device updated successfully');
-            console.log(id);
             connection.close();
             resolve();
           });
@@ -493,5 +552,6 @@ function getDeviceInfo (id){
           updatedeviceflag:updatedeviceflag,
           getDeviceInfo:getDeviceInfo,
           alldeviceinfo:alldeviceinfo,
+          insertevice:insertevice,
 }
 

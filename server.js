@@ -21,14 +21,15 @@ const logger=require('morgan')
   app.use(express.static(path.join(__dirname,'assets')))
   app.set('view engine','ejs')
   app.set('views','views')
-
   app.use(logger('dev'))
   app.use(bodyparser.urlencoded({extended:false}));
   app.use(bodyparser.json());
   app.use(cors());
-  app.use('/server',devicerouter)
   app.use('/server',postrouter)
-  app.all('*',(req,res)=>res.send('This route does not exist'));
+  app.use('/server',devicerouter)
+  app.use('/insert',postrouter)
+ // app.all('*',(req,res)=>res.send('This route does not exist'));
+  app.all(['/server','/insert'],(req,res)=>res.send('This route does not exist'));
 
 //  const oracledb = require('oracledb');
 //  oracledb.initOracleClient({libDir: 'C:\\oracle\\instantclient_21_9'});
