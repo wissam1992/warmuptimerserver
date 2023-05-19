@@ -334,6 +334,41 @@ function adddevice(device) {
     });
   });
 }
+
+
+
+function adddevices(device) {
+  console.log(device)
+/*   return new Promise((resolve, reject) => {
+    oracledb.getConnection(config, (err, connection) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      const query = 'INSERT INTO DEVICE (DEVICEID, GRACEPERIOD, WARMUPTIME,) VALUES (:DEVICEID, :GRACEPERIOD, :WARMUPTIME)';
+      const binds = {
+        DEVICEID: device.INFO_ID,
+        GRACEPERIOD: device.DEVICE_IDFK,
+        WARMUPTIME: device.MESSAGE_EN,
+       
+      };
+      const options = {
+        autoCommit: true
+      };
+
+      connection.execute(query, binds, options, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+
+        connection.close();
+      });
+    });
+  }); */
+}
 function insertevice(device) {
   console.log('insertdevice:');
   console.log(device);
@@ -389,12 +424,6 @@ function insertevice(device) {
   });
 }
 
-
-
-
-
-
-
 function updatedevice(id, warmuptimestamp) {  
 
   return new Promise((resolve, reject) => {
@@ -424,6 +453,7 @@ function updatedevice(id, warmuptimestamp) {
     });
   });
 }
+
  //UPDATE DEVICE=>>>> ALREADYUSEDFLAG
 // function updatedeviceflag(id) {  
 //   return new Promise((resolve, reject) => {
@@ -488,6 +518,7 @@ function updatedeviceflag(id) {
     });
   });
 }
+
 function getDeviceInfo (id){  
   return new Promise((resolve, reject) => {
 
@@ -553,5 +584,6 @@ function getDeviceInfo (id){
           getDeviceInfo:getDeviceInfo,
           alldeviceinfo:alldeviceinfo,
           insertevice:insertevice,
+          adddevices:adddevices,
 }
 

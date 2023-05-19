@@ -10,7 +10,7 @@ router.use((req,res,next)=>{
     console.log('warmuptimer');
     next();
   })
-   
+  
 router.route('/devices').get((req,res)=>{
     dboperation.getdevices()
     .then(data => {
@@ -116,6 +116,5 @@ router.route('/devices').get((req,res)=>{
      */
     
   })
-
 
   module.exports=router

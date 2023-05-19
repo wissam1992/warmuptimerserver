@@ -7,27 +7,13 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/server/insert" method="post">
-
-        <label for="deviceid">Device Id:</label>
-        <input type="text" name="deviceid" id="deviceid" required>
-        
-        <label for="warmuptimestamp">Warmup Timestamp:</label>
-        <input type="text" name="warmuptimestamp" id="warmuptimestamp" required>
+    <form action="/server/upload" method="post" enctype="multipart/form-data">
+        <label for="csvFile">CSV File:</label>
+        <input type="file" name="csvFile" id="csvFile" accept=".csv" required>
       
-        <!-- Include input fields for other columns in Device table -->
-      
-        <label for="alreadyusedflag">Alreda used Flag:</label>
-        <input type="text" name="alreadyusedflag" id="alreadyusedflag" required>
-
-        <label for="graceperiod">Grace Persiod Time:</label>
-        <input type="text" name="graceperiod" id="graceperiod" required>
-       
-        <label for="warmuptime">Warmup Time:</label>
-        <input type="text" name="warmuptime" id="warmuptime" required>
-     
-        <button type="submit">Submit</button>
+        <button type="submit">Upload</button>
       </form>
+      
       
 </body>
 </html>
