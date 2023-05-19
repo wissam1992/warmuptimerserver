@@ -189,9 +189,8 @@ function getdeviceinfo(id){
           const data = {
             DEVICEID: row[0],
             WARMUPTIMESTAMP: row[1],
-            ALREADYUSEDFLAG: row[2],
-            GRACEPERIOD: row[3],
-            WARMUPTIME: row[4]
+            GRACEPERIOD: row[2],
+            WARMUPTIME: row[3]
           };
 
           // const rows = result.rows;
