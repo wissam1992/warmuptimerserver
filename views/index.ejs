@@ -11,9 +11,49 @@
         <label for="csvFile">CSV File:</label>
         <input type="file" name="csvFile" id="csvFile" accept=".csv" required>
       
-        <button type="submit">Upload</button>
+        <button type="submit">Upload Devices</button>
       </form>
+
+        <br>
+        <br>
+      <form action="/server/addDeviceInfo" method="post" enctype="multipart/form-data">
+        <label for="csvFile">CSV File:</label>
+        <input type="file" name="csvFile" id="csvFile" accept=".csv" required>
       
+        <button type="submit">Upload Messeges</button>
+      </form>
+
+      <div id="responseMessage"></div> <!-- Container for displaying the response message -->
+
+      
+      <script>
+        // JavaScript code goes here
+        const form = document.querySelector('form');
+        const responseMessage = document.getElementById('responseMessage');
+    
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent the default form submission
+    
+            const formData = new FormData(form);
+            try {
+                const response = await fetch('/server/addDeviceInfo', {
+                    method: 'POST',
+                    body: formData
+                });
+    
+                if (response.ok) {
+                    const data = await response.json();
+                    responseMessage.textContent = data.message; // Display the response message
+                } else {
+                    const error = await response.text();
+                    responseMessage.textContent = `Error: ${error}`; // Display the error message
+                }
+            } catch (error) {
+                responseMessage.textContent = `Error: ${error.message}`; // Display the error message
+            }
+        });
+    </script>
+ 
       
 </body>
 </html>

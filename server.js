@@ -5,6 +5,9 @@
 const path=require('path')
 const logger=require('morgan')
  const express=require('express');
+
+ 
+ const swagger=require('./swagger')
  const bodyparser=require('body-parser');
  var cors=require('cors');
  const app=express();
@@ -21,6 +24,7 @@ const logger=require('morgan')
  // Set up middleware to parse request bodies and handle file uploads
 app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload());
+swagger(app);
 
 
 
