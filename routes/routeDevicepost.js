@@ -30,7 +30,7 @@ const fs = require('fs');
 /**
  * @swagger
  * /server/updatedevice/{id}/{warmuptimestamp}:
- *   put:
+ *   get:
  *     summary: Update a device with the specified ID and warm-up timestamp
  *     tags: [Device]
  *     description: Endpoint to update a device with the specified ID and warm-up timestamp.
