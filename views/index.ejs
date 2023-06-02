@@ -1,40 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <form action="/server/upload" method="post" enctype="multipart/form-data">
-        <label for="csvFile">CSV File:</label>
-        <input type="file" name="csvFile" id="csvFile" accept=".csv" required>
-      
+        <label for="csvFileDevices">CSV File:</label>
+        <input type="file" name="csvFileDevices" id="csvFileDevices" accept=".csv" required>
+
         <button type="submit">Upload Devices</button>
-      </form>
+    </form>
 
-        <br>
-        <br>
-      <form action="/server/addDeviceInfo" method="post" enctype="multipart/form-data">
-        <label for="csvFile">CSV File:</label>
-        <input type="file" name="csvFile" id="csvFile" accept=".csv" required>
-      
+    <br>
+    <br>
+    <form action="/server/addDeviceInfo" method="post" enctype="multipart/form-data">
+        <label for="csvFileMessages">CSV File:</label>
+        <input type="file" name="csvFileMessages" id="csvFileMessages" accept=".csv" required>
+
         <button type="submit">Upload Messeges</button>
-      </form>
+    </form>
 
-      <div id="responseMessage"></div> <!-- Container for displaying the response message -->
+    <div id="responseMessage"></div> <!-- Container for displaying the response message -->
 
-      
-      <script>
+
+    <script>
         // JavaScript code goes here
-        const form = document.querySelector('form');
+        const uploadForm = document.getElementById('uploadForm');
+        const addDeviceInfoForm = document.getElementById('addDeviceInfoForm');
         const responseMessage = document.getElementById('responseMessage');
     
-        form.addEventListener('submit', async (event) => {
+        uploadForm.addEventListener('submit', async (event) => {
             event.preventDefault(); // Prevent the default form submission
     
-            const formData = new FormData(form);
+            const formData = new FormData(uploadForm);
+            try {
+                const response = await fetch('/server/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+    
+                if (response.ok) {
+                    const data = await response.json();
+                    responseMessage.textContent = data.message; // Display the response message
+                } else {
+                    const error = await response.text();
+                    responseMessage.textContent = `Error: ${error}`; // Display the error message
+                }
+            } catch (error) {
+                responseMessage.textContent = `Error: ${error.message}`; // Display the error message
+            }
+        });
+    
+        addDeviceInfoForm.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent the default form submission
+    
+            const formData = new FormData(addDeviceInfoForm);
             try {
                 const response = await fetch('/server/addDeviceInfo', {
                     method: 'POST',
@@ -53,7 +78,37 @@
             }
         });
     </script>
- 
-      
+
+
+  <!--   <script>
+        // JavaScript code goes here
+        const form = document.querySelector('form');
+        const responseMessage = document.getElementById('responseMessage');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent the default form submission
+
+            const formData = new FormData(form);
+            try {
+                const response = await fetch('/server/addDeviceInfo', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    responseMessage.textContent = data.message; // Display the response message
+                } else {
+                    const error = await response.text();
+                    responseMessage.textContent = `Error: ${error}`; // Display the error message
+                }
+            } catch (error) {
+                responseMessage.textContent = `Error: ${error.message}`; // Display the error message
+            }
+        });
+    </script> -->
+
+
 </body>
+
 </html>

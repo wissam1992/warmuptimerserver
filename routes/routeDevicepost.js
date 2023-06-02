@@ -55,16 +55,18 @@ const fs = require('fs');
  *       500:
  *         description: Error updating device.
  */
-router.put('/updatedevice/:id/:warmuptimestamp', async (req, res) => {
+
+router.get('/updatedevice/:id/:warmuptimestamp', async (req, res) => {
+  console.log('in update')
   const { id, warmuptimestamp } = req.params;
-  try {
+   try {
     await dboperation.updatedevice(id, warmuptimestamp);
     res.send('Device updated successfully');
 
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Error updating device');
-  }
+  } 
 });
 //UPDATE DEVICE=>>>> ALREADYUSEDFLAG
 /* router.post('/updatedevice/:device_id', async (req, res) => {
@@ -115,6 +117,11 @@ router.post('/insert', (req, res) => {
   // Redirect the user to a success page or display a success message
   res.redirect('/success');
 });
+router.get('/test',(req,res)=>{
+  console.log('okkk')
+  res.send('done')
+
+});
 
 
 
@@ -123,6 +130,7 @@ router.post('/insert', (req, res) => {
 /* router.post('/upload',(req,res)=>{
   console.log('Hello')
 }) */
+
 
 /**
  * @swagger
@@ -154,13 +162,12 @@ router.post('/insert', (req, res) => {
  *       500:
  *         description: Error uploading file
  */
-
 router.post('/upload', (req, res) => {
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send('No files were uploaded.');
   }
 
-  const file = req.files.csvFile;
+  const file = req.files.csvFileDevices;
   // const filePath = ('uploads', file.name);
   const filePath = path.join(__dirname, '../uploads', file.name);
   //const filePath = multer({ dest: path.join(__dirname, 'uploads/') });
@@ -217,11 +224,23 @@ router.post('/upload', (req, res) => {
     // File is successfully uploaded, you can process it further
     // and perform the necessary database operations.
 
-    res.redirect('/success');
+    //res.redirect('/success');
+    res.send(`
+    <html>
+      <head>
+        <title>Success</title>
+      </head>
+      <body>
+        <h1>Devices Successfully Inserted</h1>
+        <p>Your devices have been inserted into the database.</p>
+        <p>Any additional information you want to provide.</p>
+      </body>
+    </html>
+  `);
+
 
   });
 });
-
 
 /**
  * @swagger
@@ -256,14 +275,15 @@ router.post('/upload', (req, res) => {
  *         description: Error uploading file or processing the data.
  */
 
-router.post('/addDeviceInfo', (req, res) => {
+  router.post('/addDeviceInfo', (req, res) => {
 
 
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send('No files were uploaded.');
   }
 
-  const file = req.files.csvFile;
+  const file = req.files.csvFileMessages;
+  console.log(file)
 
   const filePath = path.join(__dirname, '../uploads', file.name);
 
@@ -291,7 +311,7 @@ router.post('/addDeviceInfo', (req, res) => {
           })
           .catch((error) => {
             console.error('Error inserting data into Device_info table:', error);
-          });  
+          });   
       })
 
       .on('end', () => {
@@ -302,7 +322,8 @@ router.post('/addDeviceInfo', (req, res) => {
   });
 
 
-})
+}) ; 
+
 
 
 

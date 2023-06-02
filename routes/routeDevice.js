@@ -58,6 +58,31 @@ router.route('/devices').get((req,res)=>{
     });
   
   });
+  /**
+ * @swagger
+ * /server/alldeviceinfo/{id}:
+ *   get:
+ *     summary: Get all device information by ID
+ *     description: Retrieve all information for a specific device based on its ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: ID of the device
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Successful response with the device information
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 // Define the properties of the response object here
+ *       '500':
+ *         description: Internal server error occurred while retrieving the data
+ */
   router.route('/alldeviceinfo/:id').get((req,res)=>{
     dboperation.alldeviceinfo(req.params.id)
    // dboperation.getdevice(req.params.id)
